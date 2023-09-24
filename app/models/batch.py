@@ -8,6 +8,7 @@ if TYPE_CHECKING:
     from .user import User
     from .company import Company
 
+
 class Batch(Base):
     __tablename__ = "batches"
 

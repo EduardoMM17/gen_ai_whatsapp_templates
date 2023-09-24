@@ -2,9 +2,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 from typing_extensions import Any
 from dotenv import find_dotenv
 from pydantic import PostgresDsn, validator
-import os
 
-print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", os.getenv("POSTGRES_SERVER"))
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
