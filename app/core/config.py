@@ -4,6 +4,7 @@ from dotenv import find_dotenv
 from pydantic import PostgresDsn, validator
 import os
 
+print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", os.getenv("POSTGRES_SERVER"))
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
@@ -31,9 +32,9 @@ class Settings(BaseSettings):
         return PostgresDsn.build(
             scheme="postgresql",
             username=values.get("POSTGRES_USER"),
-            password=values.get("POSTGRES_PASSWOR"),
+            password=values.get("POSTGRES_PASSWORD"),
             host=values.get("POSTGRES_SERVER"),
-            path=f"/{values.get('POSTGRES_DB') or ''}",
+            path=f"{values.get('POSTGRES_DB') or ''}",
         )
 
 
