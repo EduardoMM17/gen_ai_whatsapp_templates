@@ -1,6 +1,13 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, func
 from sqlalchemy.orm import relationship
 from typing import TYPE_CHECKING
+from enum import Enum
+
+
+class Role(Enum):
+    admin = "admin"
+    user = "user"
+
 
 from ..db.session import Base
 
@@ -18,6 +25,7 @@ class User(Base):
     created_at = Column(DateTime, default=func.now())
     updated_at = Column(DateTime)
     company_id = Column(Integer, ForeignKey("companies.id"))
+    role = Column(Enum(Role), nullable=False, default=Role.user)
 
     company = relationship("Company", back_populates="users")
     batches = relationship("Batch", back_populates="submitter")
