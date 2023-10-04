@@ -1,13 +1,8 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, func
+from sqlalchemy import Enum
 from sqlalchemy.orm import relationship
 from typing import TYPE_CHECKING
-from enum import Enum
-
-
-class Role(Enum):
-    admin = "admin"
-    user = "user"
-
+from app.enums import Role
 
 from ..db.session import Base
 

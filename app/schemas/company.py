@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import Optional
 
 
 class CompanyBase(BaseModel):
@@ -6,4 +7,15 @@ class CompanyBase(BaseModel):
 
 
 class CompanyCreate(CompanyBase):
+    pass
+
+
+class CompanyInDB(CompanyBase):
+    id: int | None = None
+
+    class Config:
+        from_attributes = True
+
+
+class Company(CompanyInDB):
     pass

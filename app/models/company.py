@@ -17,4 +17,4 @@ class Company(Base):
     created_at = Column(DateTime, default=func.now())
 
     users = relationship("User", back_populates="company")
-    batches = relationship("Batch", back_populates="submitter")
+    batches = relationship("Batch", back_populates="company")
