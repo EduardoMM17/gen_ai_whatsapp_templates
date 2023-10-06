@@ -29,9 +29,6 @@ def process_zip_file(zip_bytes: bytes):
                         ticket_id = filename.split(".")[0]
                         ticket_ids_from_files.append(int(ticket_id))
 
-    print(ticket_ids_from_db)
-    print(ticket_ids_from_files)
-
     if not db_in:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="bd.xlsx file not found"
