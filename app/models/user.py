@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, func
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, func, Boolean
 from sqlalchemy import Enum
 from sqlalchemy.orm import relationship
 from typing import TYPE_CHECKING
@@ -21,6 +21,7 @@ class User(Base):
     updated_at = Column(DateTime)
     company_id = Column(Integer, ForeignKey("companies.id"))
     role = Column(Enum(Role), nullable=False, default=Role.user)
+    is_active = Column(Boolean, nullable=False, default=True)
 
     company = relationship("Company", back_populates="users")
     batches = relationship("Batch", back_populates="submitter")

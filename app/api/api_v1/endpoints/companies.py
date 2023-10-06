@@ -1,6 +1,4 @@
-from fastapi import APIRouter, Depends, Body, HTTPException, status
-from fastapi.encoders import jsonable_encoder
-from pydantic.networks import EmailStr
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import Any
 
@@ -17,15 +15,7 @@ router = APIRouter()
 def create_company(
     *, db: Session = Depends(dependencies.get_db), company_in: schemas.CompanyCreate
 ):
-    """Create new company.
-    This endpoint is used to create a new company.
-    Args:
-        company_in (schemas.CompanyCreate): Company object to be created.
-    Returns:
-        schemas.Company: Created company object.
-    Raises:
-        HTTPException: 400 if company already exists.
-    """
+    """Create new company"""
     company = crud.company.get_by_name(db=db, name=company_in.name)
     if company:
         raise HTTPException(
