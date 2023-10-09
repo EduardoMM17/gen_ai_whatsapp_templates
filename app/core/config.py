@@ -24,7 +24,7 @@ class Settings(BaseSettings):
 
     @validator("SQLALCHEMY_DATABASE_URI", pre=True)
     def assemble_db_connection(cls, v: str | None, values: dict[str, Any]) -> Any:
-        # cls is a refference to the class
+        # cls is a reference to the class
         # v is the value of the field
         # values is a dict containing the values of all the fields in the model up to the point of validation
         if isinstance(v, str):
@@ -36,6 +36,9 @@ class Settings(BaseSettings):
             host=values.get("POSTGRES_SERVER"),
             path=f"{values.get('POSTGRES_DB') or ''}",
         )
+
+    CELERY_BROKER_URL: str
+    CELERY_RESULT_BACKEND: str
 
 
 settings = Settings()

@@ -8,7 +8,6 @@ from app.schemas.company import CompanyCreate
 class CRUDCompany(CRUDBase[Company, CompanyCreate]):
     def get_by_name(self, db: Session, *, name: str) -> Company | None:
         return db.query(Company).filter(Company.name == name).first()
-    
 
     def create(self, db: Session, *, obj_in: CompanyCreate) -> Company:
         db_obj = Company(**obj_in.model_dump())
