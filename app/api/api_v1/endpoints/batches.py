@@ -7,6 +7,7 @@ from app import crud, models, schemas
 from app.api import dependencies
 from app.core.config import settings
 from app.services.file_services import process_zip_file
+from app.core.celery import celery as celery_app
 
 
 router = APIRouter()
@@ -22,7 +23,11 @@ async def upload_batch(
 ):
     if file.filename.endswith(".zip"):
         zip_bytes = await file.read()
-        process_zip_file(zip_bytes)
+        raw_conversations, tickets_info = process_zip_file(zip_bytes)
+        new_task = celery_app.send_task(
+            "app.tasks.test", args=[raw_conversations, tickets_info]
+        )
+
         if company:
             company_obj = crud.company.get_by_name(db=db, name=company)
         else:
@@ -32,7 +37,8 @@ async def upload_batch(
             db=db, company_id=company_obj.id, submitter_id=current_user.id
         )
         return {
-            "msg": "Batch uploaded successfully. A CSV file will be send to your email in max 1 hour"
+            "msg": "Batch uploaded successfully. A CSV file will be send to your email in max 1 hour",
+            "task_id": new_task.id,
         }
     else:
         return {"msg": "File format not supported"}
