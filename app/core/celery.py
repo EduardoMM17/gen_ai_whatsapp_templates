@@ -12,7 +12,9 @@ class CeleryConfig:
 
 
 def make_celery(app_name=__name__):
-    celery = Celery(app_name, backend=CeleryConfig.result_backend, broker=CeleryConfig.broker_url)
+    celery = Celery(
+        app_name, backend=CeleryConfig.result_backend, broker=CeleryConfig.broker_url
+    )
     celery.conf.update(CeleryConfig.__dict__)
     return celery
 

@@ -40,5 +40,9 @@ class Settings(BaseSettings):
     CELERY_BROKER_URL: str
     CELERY_RESULT_BACKEND: str
 
+    OPEN_AI_API_KEY: str
+    LLM_MODEL_CONV: str
+    LLM_MODEL_TEMP: str
+
 
 settings = Settings()
