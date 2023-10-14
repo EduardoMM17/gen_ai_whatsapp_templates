@@ -23,9 +23,9 @@ async def upload_batch(
 ):
     if file.filename.endswith(".zip"):
         zip_bytes = await file.read()
-        raw_conversations, tickets_info = process_zip_file(zip_bytes)
+        tickets_info = process_zip_file(zip_bytes)
         new_task = celery_app.send_task(
-            "app.tasks.test", args=[raw_conversations, tickets_info]
+            "app.tasks.test", args=[tickets_info]
         )
 
         if company:

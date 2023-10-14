@@ -10,7 +10,7 @@ def process_zip_file(zip_bytes: bytes):
     with ZipFile(io.BytesIO(zip_bytes)) as z:
         file_data = extract_file_data(z)
     validate_file_data(file_data)
-    return organize_raw_conversations(file_data), organize_tickets_info(file_data)
+    return file_data["tickets_info"]
 
 
 def extract_file_data(z):
@@ -52,17 +52,10 @@ def validate_file_data(file_data):
         ticket_in = False
         for ticket in file_data["tickets_info"]:
             if int(ticket["ticketId"]) == int(raw_conversation["ticketId"]):
+                ticket.update({"rawConversation": raw_conversation["content"]})
                 ticket_in = True
         if not ticket_in:
             raise HTTPException(
                 status_code=status.HTTP_400_BAD_REQUEST,
                 detail="ticketIds from db do not match ticketIds from files",
             )
-
-
-def organize_raw_conversations(file_data):
-    return file_data["raw_conversations"]
-
-
-def organize_tickets_info(file_data):
-    return file_data["tickets_info"]
